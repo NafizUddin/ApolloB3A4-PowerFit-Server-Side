@@ -1,4 +1,6 @@
-export type TProduct = {
+import { Model } from 'mongoose';
+
+export interface IProduct {
   name: string;
   price: number;
   stockQuantity: number;
@@ -6,4 +8,12 @@ export type TProduct = {
   image: string;
   category: string;
   isDeleted: boolean;
-};
+}
+
+export interface ProductModel extends Model<IProduct> {
+  isProductExists(
+    name: string,
+    price: number,
+    description: string,
+  ): Promise<IProduct | null>;
+}

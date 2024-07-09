@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { TProduct } from './products.interface';
+import { IProduct, ProductModel } from './products.interface';
 
-const productSchema = new Schema<TProduct>(
+const productSchema = new Schema<IProduct, ProductModel>(
   {
     name: {
       type: String,
@@ -42,4 +42,12 @@ productSchema.pre('find', function (next) {
   next();
 });
 
-export const Product = model<TProduct>('Product', productSchema);
+productSchema.statics.isProductExists = async function (
+  name: string,
+  description: string,
+  price: number,
+) {
+  return await Product.findOne({ name, price, description });
+};
+
+export const Product = model<IProduct, ProductModel>('Product', productSchema);
