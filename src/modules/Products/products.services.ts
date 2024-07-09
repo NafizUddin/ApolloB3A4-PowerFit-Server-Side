@@ -2,6 +2,8 @@ import httpStatus from 'http-status';
 import AppError from '../../errors/appError';
 import { IProduct } from './products.interface';
 import { Product } from './products.model';
+import QueryBuilder from '../../queryBuilder/QueryBuilder';
+import { productSearchableFields } from './products.constant';
 
 const createProductIntoDB = async (payload: IProduct) => {
   if (
@@ -18,14 +20,22 @@ const createProductIntoDB = async (payload: IProduct) => {
   return result;
 };
 
-const getAllProductsFromDB = async () => {
-  const result = await Product.find();
+const getAllProductsFromDB = async (query: Record<string, unknown>) => {
+  const productQuery = new QueryBuilder(Product.find(), query)
+    .search(productSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const meta = await productQuery.countTotal();
+  const result = await productQuery.modelQuery;
 
   if (result.length === 0) {
     return null;
   }
 
-  return result;
+  return { result, meta };
 };
 
 const getSingleProductFromDB = async (id: string) => {
