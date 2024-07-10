@@ -45,9 +45,8 @@ productSchema.pre('find', function (next) {
 productSchema.statics.isProductExists = async function (
   name: string,
   description: string,
-  price: number,
 ) {
-  return await Product.findOne({ name, price, description });
+  return await Product.findOne({ name, description });
 };
 
 export const Product = model<IProduct, ProductModel>('Product', productSchema);

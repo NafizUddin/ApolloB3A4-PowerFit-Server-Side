@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Model } from 'mongoose';
 
 export interface IProduct {
@@ -11,9 +12,5 @@ export interface IProduct {
 }
 
 export interface ProductModel extends Model<IProduct> {
-  isProductExists(
-    name: string,
-    price: number,
-    description: string,
-  ): Promise<IProduct | null>;
+  isProductExists(name: string, description: string): Promise<IProduct | null>;
 }

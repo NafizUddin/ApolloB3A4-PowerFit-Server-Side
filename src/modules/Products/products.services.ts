@@ -6,13 +6,7 @@ import QueryBuilder from '../../queryBuilder/QueryBuilder';
 import { productSearchableFields } from './products.constant';
 
 const createProductIntoDB = async (payload: IProduct) => {
-  if (
-    await Product.isProductExists(
-      payload?.name,
-      payload?.price,
-      payload?.description,
-    )
-  ) {
+  if (await Product.isProductExists(payload?.name, payload?.description)) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Product already exists!');
   }
 
@@ -28,14 +22,14 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
     .paginate()
     .fields();
 
-  const meta = await productQuery.countTotal();
+  // const meta = await productQuery.countTotal();
   const result = await productQuery.modelQuery;
 
   if (result.length === 0) {
     return null;
   }
 
-  return { result, meta };
+  return result;
 };
 
 const getSingleProductFromDB = async (id: string) => {
