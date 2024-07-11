@@ -32,7 +32,20 @@ class QueryBuilder<T> {
 
     excludeFields.forEach((el) => delete queryObj[el]);
 
-    this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
+    const { minPrice, maxPrice, ...restQuery } = queryObj;
+
+    const min = parseFloat(minPrice as string) || 0;
+    const max = parseFloat(maxPrice as string) || Number.MAX_VALUE;
+
+    const combinedQuery = {
+      ...restQuery,
+      price: {
+        $gte: min,
+        $lte: max,
+      },
+    };
+
+    this.modelQuery = this.modelQuery.find(combinedQuery as FilterQuery<T>);
 
     return this;
   }
