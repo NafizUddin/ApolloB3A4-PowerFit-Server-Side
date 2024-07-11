@@ -25,6 +25,10 @@ const productSchema = new Schema<IProduct, ProductModel>(
       type: String,
       required: [true, 'Product image URL is required'],
     },
+    benefits: {
+      type: String,
+      required: [true, 'Product Benefit is required'],
+    },
     category: {
       type: String,
       required: [true, 'Product category is required'],

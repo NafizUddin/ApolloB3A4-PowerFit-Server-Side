@@ -16,7 +16,11 @@ const createProductValidationSchema = z.object({
         invalid_type_error: 'Product description must be a string',
       })
       .trim(),
-    images: z.string().optional(),
+    images: z.string(),
+    benefits: z.string({
+      required_error: 'Product benefits is required',
+      invalid_type_error: 'Product benefits must be a string',
+    }),
     category: z
       .string({
         required_error: 'Product category is required',
@@ -49,6 +53,12 @@ const updateProductValidationSchema = z.object({
       .trim()
       .optional(),
     images: z.string().optional(),
+    benefits: z
+      .string({
+        required_error: 'Product benefits is required',
+        invalid_type_error: 'Product benefits must be a string',
+      })
+      .optional(),
     category: z
       .string({
         required_error: 'Product category is required',
