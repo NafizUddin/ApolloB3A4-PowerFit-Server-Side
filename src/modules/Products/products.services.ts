@@ -15,6 +15,17 @@ const createProductIntoDB = async (payload: IProduct) => {
 };
 
 const getAllProductsFromDB = async (query: Record<string, unknown>) => {
+  if (query?.minPrice && query?.maxPrice) {
+    const min = parseFloat(query?.minPrice as string) || 0;
+    const max = parseFloat(query?.maxPrice as string) || Number.MAX_VALUE;
+
+    const products = await Product.find({
+      price: { $gte: min, $lte: max },
+    });
+
+    return products;
+  }
+
   const productQuery = new QueryBuilder(Product.find(), query)
     .search(productSearchableFields)
     .filter()
