@@ -9,7 +9,7 @@ const createProducts = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Product created successfully',
+    message: 'Product Created Successfully',
     data: result,
   });
 });
@@ -77,7 +77,7 @@ const deleteProduct = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Product deleted successfully',
+    message: 'Product Deleted Successfully',
     data: result,
   });
 });
