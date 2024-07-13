@@ -5,8 +5,13 @@ import { Product } from './products.model';
 import QueryBuilder from '../../queryBuilder/QueryBuilder';
 import { productSearchableFields } from './products.constant';
 
-const createProductIntoDB = async (payload: IProduct) => {
-  if (await Product.isProductExists(payload?.name, payload?.description)) {
+const createProductIntoDB = async (payload: Partial<IProduct>) => {
+  if (
+    await Product.isProductExists(
+      payload?.name as string,
+      payload?.description as string,
+    )
+  ) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Product already exists!');
   }
 
