@@ -27,14 +27,14 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
     .paginate()
     .fields();
 
-  // const meta = await productQuery.countTotal();
+  const meta = await productQuery.countTotal();
   const result = await productQuery.modelQuery;
 
   if (result.length === 0) {
     return null;
   }
 
-  return result;
+  return { meta, result };
 };
 
 const getSingleProductFromDB = async (id: string) => {
